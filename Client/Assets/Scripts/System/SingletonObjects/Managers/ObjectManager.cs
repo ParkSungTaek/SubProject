@@ -66,7 +66,7 @@ namespace Client
             }
 
             T instance = null;
-            if (parent = null)
+            if (parent == null)
             {
 
                 instance = UnityEngine.Object.Instantiate<T>(prefab);
