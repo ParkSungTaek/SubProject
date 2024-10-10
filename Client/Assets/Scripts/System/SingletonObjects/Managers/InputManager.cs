@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace Client
 {
@@ -38,7 +39,13 @@ namespace Client
             GameManager.Instance.AddOnUpdate(OnUpdate);
 
             #region 인풋 딕셔너리 관련 하드코딩(초깃값을 데이터에서 갖고 오게 된다면 반드시 삭제할 것.) 
-            skillBindDict = new Dictionary<eInputSystem, Tuple<KeyCode, int>>();
+            skillBindDict = new Dictionary<eInputSystem, Tuple<KeyCode, int>>()
+            {
+                {eInputSystem.Skill1, new Tuple<KeyCode, int>(KeyCode.Q, 0)},
+                {eInputSystem.Skill2, new Tuple<KeyCode, int>(KeyCode.W, 1)},
+                {eInputSystem.Skill3, new Tuple<KeyCode, int>(KeyCode.E, 2)},
+                {eInputSystem.Skill4, new Tuple<KeyCode, int>(KeyCode.R, 3)},
+            };
             #endregion
         }
 
@@ -61,5 +68,18 @@ namespace Client
 
         }
 
+        /// <summary>
+        /// 버튼을 눌렀을 때 Input Manager에서 딕셔너리 통해 아~ 이거 쓰려는구나! 하고 쓰게 해준다.
+        /// [TODO : leejhee] Linq 쓰면 디폴트값이 0이라서, 유효하지 않다. 해결하자.
+        /// </summary>
+        /// <param name="skillIndex"></param>
+        public void ThrowSkill(int skillIndex)
+        {
+            eInputSystem targetSkill = skillBindDict.FirstOrDefault(x => x.Value.Item2 == skillIndex).Key;
+            if (skillBindDict.ContainsKey(targetSkill))
+            {
+                Debug.Log($"옛다 {targetSkill} 스킬이나 먹어라~");
+            }            
+        }
     }
 }

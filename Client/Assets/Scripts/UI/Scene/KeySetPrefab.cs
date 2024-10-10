@@ -32,7 +32,7 @@ namespace Client
             Debug.Log($"{skillName}, 자 이제 이 부분 채워보자~");
         }
 
-        public void BindPanel()
+        void BindPanel()
         {
             BindEvent(GetImage((int)Images.ChangePanel).gameObject, OnClickPanel);
         }

@@ -14,6 +14,7 @@ namespace Client
         private void Start()
         {
             UIManager.Instance.ShowSceneUI<UI_InputTestScene>();
+            UIManager.Instance.ShowSceneUI<UI_MobileInputField>();
         }
     }
 }

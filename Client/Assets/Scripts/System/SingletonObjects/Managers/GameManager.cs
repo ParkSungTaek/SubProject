@@ -57,6 +57,7 @@ namespace Client
 
                 //GoogleSheet googleSheet = _instance._networkManager.data;
                 //_instance.StartCoroutine(_instance._networkManager.GoogleSheetsDataParsing(googleSheet.associatedSheet, googleSheet.GetData, googleSheet.associatedDataWorksheet));
+                InputManager.Instance.Init();
             }
         }
         public void InitAfterDataLoad()
