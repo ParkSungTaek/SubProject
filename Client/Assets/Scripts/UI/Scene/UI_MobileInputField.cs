@@ -27,7 +27,7 @@ namespace Client
         }
 
         /// <summary>
-        /// 눈 딱 감고 object 한번만 씁시다.
+        /// 안드로이드 플랫폼에 있는 버튼들에 대해, 버튼마다의 스킬을 바인딩해준다.
         /// </summary>
         void BindButtons()
         {
@@ -45,9 +45,8 @@ namespace Client
             }
         }
 
-        void OnClickSkillButtons(PointerEventData evt, object ID)
+        void OnClickSkillButtons(PointerEventData evt, int id)
         {
-            int id = (int)ID;
             InputManager.Instance.ThrowSkill(id);
         }
     }
