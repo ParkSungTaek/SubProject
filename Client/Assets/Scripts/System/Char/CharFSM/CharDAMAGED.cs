@@ -8,16 +8,22 @@ namespace Client
     {
         public CharDAMAGED(CreateFSMParameter parameter) : base(parameter)
         {
+
+
         }
 
-        public override CharState CharAction(FSMParameter parameter)
+        public override CharState CharAction(FSMParameter parameter, out bool actionSuccess)
         {
+            actionSuccess = true;
             switch (parameter.charAction)
             {
                 case Client.CharAction.Idle:
                     {
                         if (IsAction)
+                        {
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
+                        }
 
                         NextCharFSM = charFSMInfo.FSMDictionary[PlayerState.IDLE];
                         ActionInvoke(parameter);
@@ -60,6 +66,8 @@ namespace Client
                         return NextCharFSM;
                     }
             }
+
+            actionSuccess = false;
             Debug.LogError($"CharFSM Error {NowPlayerState()} No FSM Action : {parameter.charAction}");
             return charFSMInfo.CharNowState;
         }

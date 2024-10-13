@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+#if UNITY_EDITOR
 public class ColorSelect : MonoBehaviour
 {
     public int index;
@@ -31,3 +31,4 @@ public class ColorSelect : MonoBehaviour
         }
     }
 }
+#endif

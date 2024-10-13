@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using UnityEditor;
 
-
+#if UNITY_EDITOR
 //using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +38,7 @@ public class SPUM_AnimationManager : MonoBehaviour
     public SPUM_PresetData SPUM_PresetData;
     public Toggle PresetTogle;
     public Dropdown presetDropdown;
+
     [Header("Manager")]
     public SPUM_Manager SPUM_Manager;
     public void ScrollContentReset(){
@@ -336,3 +337,4 @@ foreach (var package in UnitPackagesData)
         RefreshStatePanel();
     }
 }
+#endif

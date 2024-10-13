@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
+#if UNITY_EDITOR
 public class SPUM_AnimationStatePanel : MonoBehaviour
 {
     public Text SelectedStateText;
@@ -73,3 +73,4 @@ public class SPUM_AnimationStatePanel : MonoBehaviour
         manager.ScrollContentReset();
     }
 }
+#endif

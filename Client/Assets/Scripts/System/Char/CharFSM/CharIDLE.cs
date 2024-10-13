@@ -11,8 +11,9 @@ namespace Client
 
         }
 
-        public override CharState CharAction(FSMParameter parameter)
+        public override CharState CharAction(FSMParameter parameter, out bool actionSuccess)
         {
+            actionSuccess = true;
             switch (parameter.charAction)
             {
                 case Client.CharAction.Idle:

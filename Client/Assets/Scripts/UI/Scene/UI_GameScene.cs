@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections.Generic;
 using Client;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Client
 {

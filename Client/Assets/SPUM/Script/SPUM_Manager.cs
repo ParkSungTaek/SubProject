@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 #if UNITY_EDITOR
 using UnityEditor;
-#endif
 using System.IO;
 using System.Linq;
 using System;
@@ -1589,3 +1588,4 @@ public class SPUM_Manager : MonoBehaviour
 
     //Package 
 }
+#endif

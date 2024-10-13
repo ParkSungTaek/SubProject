@@ -16,8 +16,10 @@ namespace Client
 
         public int NowPriority { get; set; }
 
-        public override CharState CharAction(FSMParameter parameter)
+        public override CharState CharAction(FSMParameter parameter, out bool actionSuccess)
         {
+
+            actionSuccess = true;
             switch (parameter.charAction)
             {
                 case Client.CharAction.Idle:
@@ -30,6 +32,7 @@ namespace Client
                         }
                         else
                         {
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
                         }
                     }
@@ -43,6 +46,8 @@ namespace Client
                         }
                         else
                         {
+
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
                         }
                     }
@@ -56,6 +61,8 @@ namespace Client
                         }
                         else
                         {
+
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
                         }
                     }
@@ -69,6 +76,8 @@ namespace Client
                         }
                         else
                         {
+
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
                         }
                     }
@@ -82,6 +91,8 @@ namespace Client
                         }
                         else
                         {
+
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
                         }
                     }
@@ -96,6 +107,8 @@ namespace Client
                         }
                         else
                         {
+
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
                         }
                     }
@@ -109,10 +122,14 @@ namespace Client
                         }
                         else
                         {
+
+                            actionSuccess = false;
                             return charFSMInfo.CharNowState;
                         }
                     }
             }
+
+            actionSuccess = false;
             Debug.LogError($"CharFSM Error {NowPlayerState()} No FSM Action : {parameter.charAction}");
             return charFSMInfo.CharNowState;
         }

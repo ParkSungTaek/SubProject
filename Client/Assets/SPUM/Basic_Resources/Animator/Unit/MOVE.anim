@@ -4370,7 +4370,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Root/BodySet/P_Body
+    path: Root/P_RFoot
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -4382,7 +4382,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Root/BodySet/P_Body
+    path: Root/P_RFoot
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -4394,7 +4394,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Root/BodySet/P_Body
+    path: Root/P_RFoot
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -4514,7 +4514,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Root/P_RFoot
+    path: Root/BodySet/P_Body
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -4526,7 +4526,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Root/P_RFoot
+    path: Root/BodySet/P_Body
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -4538,7 +4538,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Root/P_RFoot
+    path: Root/BodySet/P_Body
     classID: 4
     script: {fileID: 0}
     flags: 0

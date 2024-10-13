@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+
+#if UNITY_EDITOR
 using UnityEditor;
 public class SPUM_PaginationManager : MonoBehaviour
 {
@@ -134,8 +136,8 @@ public class SPUM_PaginationManager : MonoBehaviour
             // var newPrefab = SPUM_Manager.SaveConvertPrefabs(savedPrefab);
             // updatedPrefabs.Add(newPrefab);
             // indicesToRemove.Add(prefabIndex);
-            Debug.Log(savedPrefab._code);
-            EditorUtility.SetDirty(savedPrefab);
+            // Debug.Log(savedPrefab._code);
+             EditorUtility.SetDirty(savedPrefab);
         }
             AssetDatabase.SaveAssets();
  
@@ -396,3 +398,4 @@ public class SPUM_PaginationManager : MonoBehaviour
         }
     }
 }
+#endif

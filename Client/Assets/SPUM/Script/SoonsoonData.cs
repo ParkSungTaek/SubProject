@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+#if UNITY_EDITOR
 public class SoonsoonData
 {
     // Start is called before the first frame updateprivate 
@@ -165,3 +166,5 @@ public class SoonsoonData
         // #endif
     }
 }
+
+#endif

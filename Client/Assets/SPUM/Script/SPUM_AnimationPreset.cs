@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-
+#if UNITY_EDITOR
 public class SPUM_AnimationPreset : MonoBehaviour
 {
     public string Name;
@@ -85,3 +85,4 @@ public class SPUM_AnimationPreset : MonoBehaviour
         ApplyPreset.onClick.RemoveAllListeners();
     }
 }
+#endif

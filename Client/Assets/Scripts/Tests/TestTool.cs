@@ -27,5 +27,5 @@ using UnityEditor;
         Resources.UnloadUnusedAssets();
         System.GC.Collect();
     }
-#endif
 }
+#endif

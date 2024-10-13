@@ -5,6 +5,7 @@ using System.IO;
 using Moments.Encoder;
 using ThreadPriority = System.Threading.ThreadPriority;
 using System.Linq;
+#if UNITY_EDITOR
 [Serializable]
 public class ListItem
 {
@@ -429,3 +430,4 @@ public class SPUM_Exporter : MonoBehaviour
 	}
 
 }
+#endif

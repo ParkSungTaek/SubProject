@@ -12,6 +12,8 @@ namespace Client
         private Dictionary<PlayerState, CharState> _fsmDictionary = new Dictionary<PlayerState, CharState>();
         private CharBase _charBase;
         private CharState _charNowState;
+        private string _charNowAnim = "";
+
         public CharState CharNowState => _charNowState;
         public PlayerState PlayerState => _charNowState.NowPlayerState();
         public Dictionary<PlayerState, CharState> FSMDictionary => _fsmDictionary;
@@ -37,10 +39,29 @@ namespace Client
                 return;
 
             PlayerState playerState = _charNowState.NowPlayerState();
-            _charNowState = _charNowState.CharAction(parameter);
+            string charNowAnim = _charNowAnim;
+            bool isActionSuccess = false;
+            _charNowState = _charNowState.CharAction(parameter, out isActionSuccess);
 
-            // 이미 플레이중이면 무시
-            _charNowState.AnimPlay(playerState != _charNowState.NowPlayerState());
+            // 행동 실패
+            if (isActionSuccess == false)
+                return;
+
+            // 이미 같은 애니메이션 플레이중이면 무시
+            //_charNowState.AnimPlay(playerState != _charNowState.NowPlayerState());
+            if (parameter.isPlayAnim)
+            {
+                if (_charBase.CharAnimInfo == null)
+                    return;
+                Animator animator = _charBase.CharAnimInfo.Animator;
+                if (animator == null)
+                    return;
+
+                animator.Play(parameter.AnimName);
+                _charNowState.AnimPlay(parameter.AnimName != charNowAnim);
+                _charNowAnim = parameter.AnimName;
+            }
+
         }
     }
 }

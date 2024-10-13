@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
+#if UNITY_EDITOR
 public class SPUM_PackagePanel : MonoBehaviour
 {
     //public List<SpumAnimationClip> spumPackageElements;
@@ -53,3 +53,4 @@ public class SPUM_PackagePanel : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
     }
 }
+#endif

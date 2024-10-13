@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
+#if UNITY_EDITOR
 public class CustomScriptCreator
 {
     // Project View에서 우클릭 메뉴 추가
@@ -20,7 +21,7 @@ using System.Collections.Generic;
 
 namespace Client
 {
-    public class NewCustomScript : MonoBehaviour
+    public class NewCustomScript
     {
         
     }
@@ -53,4 +54,4 @@ namespace Client
         return path;
     }
 }
-
+#endif

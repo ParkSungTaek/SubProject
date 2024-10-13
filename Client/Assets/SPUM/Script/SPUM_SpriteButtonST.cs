@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+#if UNITY_EDITOR
 public class SPUM_SpriteButtonST : MonoBehaviour
 {
     private bool isActive = false;
@@ -191,3 +192,4 @@ public class SPUM_SpriteButtonST : MonoBehaviour
     //     ToggleTarget?.RemoveSprite();
     // }
 }
+#endif

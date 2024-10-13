@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+#if UNITY_EDITOR
+
 public class SPUM_UIManager : MonoBehaviour
 {
     [Header("▼ Version")] [Space(5)]
@@ -373,3 +376,4 @@ public class SPUM_UIManager : MonoBehaviour
     }
     #endregion
 }
+#endif

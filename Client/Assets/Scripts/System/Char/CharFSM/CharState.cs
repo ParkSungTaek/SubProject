@@ -17,13 +17,51 @@ namespace Client
         Death,
     }
 
+    /// <summary>
+    /// FSM 전달용 파라미터
+    /// </summary>
     public struct FSMParameter
     {
-        //행동 Idle / Attack / Move / CC <- 뒤지게 늘어남 / Death 
+        //행동 Idle / Attack / Move / CC / Death 
         public CharAction charAction;
         public int priority;
+        public bool isPlayAnim;
+        public string AnimName;
         public Action<FSMParameter> actionFSMParameter;
         public Action action;
+
+        public FSMParameter
+        (
+            int _priority = 0,
+            bool _isPlayAnim = false,
+            string _AnimName = "",
+            Action<FSMParameter> _actionFSMParameter = null,
+            Action _action = null,
+            CharAction _charAction = CharAction.Idle
+        )
+        {
+            charAction =  _charAction;
+            priority = _priority;
+            isPlayAnim = _isPlayAnim;
+            AnimName = _AnimName;
+            actionFSMParameter = _actionFSMParameter;
+            action = _action;
+        }
+
+        public FSMParameter
+        (
+            Action<FSMParameter> _actionFSMParameter = null,
+            Action _action = null,
+            CharAction _charAction = CharAction.Idle
+        )
+        {
+            charAction = _charAction;
+            priority = 0;
+            isPlayAnim = false;
+            AnimName = null;
+            actionFSMParameter = _actionFSMParameter;
+            action = _action;
+        }
     }
     
     public struct CreateFSMParameter
@@ -67,7 +105,7 @@ namespace Client
         
         public abstract PlayerState NowPlayerState();
 
-        public abstract CharState CharAction(FSMParameter parameter);
+        public abstract CharState CharAction(FSMParameter parameter, out bool actionSuccess);
 
         public virtual void ActionInvoke(FSMParameter parameter)
         {
@@ -77,8 +115,8 @@ namespace Client
         public virtual void AnimPlay(bool play = true)
         {
             if (play)
-            { 
-                charBase.PlayStateAnimation(NowPlayerState()); 
+            {
+                charBase.PlayStateAnimation(NowPlayerState());
             }    
                 
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-
+#if UNITY_EDITOR
 public class SPUM_PackageButton : MonoBehaviour
 {
     public int _index; // 패키지의 인덱스
@@ -31,3 +31,4 @@ public class SPUM_PackageButton : MonoBehaviour
         });
     }
 }
+#endif
