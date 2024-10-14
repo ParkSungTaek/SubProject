@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 541017776701429275}
   - component: {fileID: 1265736476020838112}
   - component: {fileID: 2047893942416797522}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BindSkillName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3501168486605250853
 RectTransform:
   m_ObjectHideFlags: 0
@@ -297,8 +297,9 @@ GameObject:
   - component: {fileID: 3023530688166548976}
   - component: {fileID: 23880303610779529}
   - component: {fileID: 5642162979642782955}
+  - component: {fileID: -2140067943020482437}
   - component: {fileID: 3662221685642819652}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: KeySetPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +336,7 @@ Canvas:
   m_GameObject: {fileID: 4653503867935593689}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -371,7 +372,24 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
+--- !u!114 &-2140067943020482437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4653503867935593689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &3662221685642819652
 MonoBehaviour:
   m_ObjectHideFlags: 0

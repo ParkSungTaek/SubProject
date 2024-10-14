@@ -18,9 +18,9 @@ namespace Client
         
         /// <summary>
         /// Input system에서 입력과 바인딩할 스킬의 종류들을 나타냅니다.
-        /// 이 Input 관련 enum 또한 하드하게 안할수도 있지 않을까?
+        /// Skill_Num을 사용할 경우 무조건 1부터 인덱싱하기.(None 때문에)
         /// </summary>
-        enum eInputSystem
+        public enum eInputSystem
         {
             None,
             Skill1,
@@ -46,8 +46,8 @@ namespace Client
         #endregion
         
       
-        // 앞으로 이거 쓸겁니다.
-        private Dictionary<eInputSystem, Action<InputParameter>> SkillBindDict;
+        // SkillBindDict만 추후 스킬들 가지고 있는 스크립트에서 할당 필요할 때 사용 가능
+        public Dictionary<eInputSystem, Action<InputParameter>> SkillBindDict;
 
         private Dictionary<eMiddleLevel, eInputSystem> MidKeyBind;
         private Dictionary<KeyCode, eMiddleLevel> WinKeyBind;
@@ -144,6 +144,18 @@ namespace Client
         }
 
         /// <summary>
+        /// 설정창에서 키 바인딩에 대한 정보를 띄우기 위해서만 사용합니다.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<KeyCode, eInputSystem> GetAllKeyBinds()
+        {
+            var DirectKeyDict = new Dictionary<KeyCode, eInputSystem>();
+            foreach (var keycode in WinKeyBind.Keys)
+                DirectKeyDict.Add(keycode, MidKeyBind[WinKeyBind[keycode]]);
+            return DirectKeyDict;
+        }
+
+        /// <summary>
         /// 설정창에서 키 세팅을 할 때 키코드를 받아서 딕셔너리를 편집
         /// </summary>
         /// <param name="setKey"></param>
@@ -174,12 +186,6 @@ namespace Client
                 //일단 아무것도 없으니까 저렇게 넣는다.
                 Debug.Log($"옛다 {targetAction} 스킬이나 먹어라~");
             }
-            /*
-            eInputSystem targetSkill = rawSkillBindDict.FirstOrDefault(x => x.Value.Item2 == skillIndex).Key;
-            if (rawSkillBindDict.ContainsKey(targetSkill))
-            {
-                Debug.Log($"옛다 {targetSkill} 스킬이나 먹어라~");
-            }  */
         }
 
         /// <summary>
@@ -204,14 +210,6 @@ namespace Client
                     targetAction.Invoke(new InputParameter());
                     Debug.Log($"옛다 {targetAction} 스킬이나 먹어라~");
                 }
-
-                /*
-                eInputSystem targetSkill = rawSkillBindDict.FirstOrDefault(x => x.Value.Item1 == keyCode).Key;
-                if (rawSkillBindDict.ContainsKey(targetSkill))
-                {
-                    Debug.Log($"옛다 {targetSkill} 스킬이나 먹어라~");
-                }
-                */
             }            
         }
     }

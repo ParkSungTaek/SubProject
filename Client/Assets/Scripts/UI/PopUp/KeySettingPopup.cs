@@ -8,7 +8,7 @@ namespace Client
     {
         enum GameObjects
         {
-            VerticalPanel,
+            PanelContents,
         }
 
         enum Buttons
@@ -26,34 +26,37 @@ namespace Client
             ShowBindingSlots();
         }
 
+        /// <summary>
+        /// 키 세팅용 팝업을 열었을 때, 스킬마다의 키 바인딩 정보를 보여준다.
+        /// </summary>
+        void ShowBindingSlots()
+        {
+            GameObject verticalPanel = GetGameObject((int)GameObjects.PanelContents);
+            foreach (Transform child in verticalPanel.transform)
+                Destroy(child.gameObject);
+           
+            var DirectKeyDict = InputManager.Instance.GetAllKeyBinds();
+            foreach (var directPair in DirectKeyDict)
+            {
+                GameObject bindPrefab = ObjectManager.Instance.Instantiate(
+                    "UI/Scene/KeySetPrefab", verticalPanel.transform);
+                KeySetPrefab keySet = bindPrefab.GetComponent<KeySetPrefab>();
+                keySet.SetBindInfo(directPair.Value, directPair.Key);
+            }
+        }
+
+        #region Binding Button
         void BindButton()
         {
             BindEvent(GetButton((int)Buttons.CloseBtn).gameObject, OnClickCloseBtn);
         }
 
-        void ShowBindingSlots()
-        {
-            GameObject verticalPanel = GetGameObject((int)GameObjects.VerticalPanel);
-            foreach (Transform child in verticalPanel.transform)
-                Destroy(child.gameObject);
-
-            // [TODO: ljeehee] 이 SKILL_NUM은 나중에 데이터에서 끌어오든가 하는게 맞겠다.
-            for (int i = 0; i < InputManager.Instance.SKILL_NUM; i++)
-            {
-                GameObject bindPrefab = ObjectManager.Instance.Instantiate(
-                    "UI/Scene/KeySetPrefab", verticalPanel.transform);
-                KeySetPrefab keySet = bindPrefab.GetComponent<KeySetPrefab>();
-                // 모의임. 나중에 데이터 통해서 받아오도록 해야함.
-                keySet.SetBindInfo($"{i}");
-            }
-
-        }
-
         void OnClickCloseBtn(PointerEventData evt)
         {
             UIManager.Instance.ClosePopupUI();
+            KeySetPrefab._interactable = true;
         }
-
+        #endregion
 
     }
 }
