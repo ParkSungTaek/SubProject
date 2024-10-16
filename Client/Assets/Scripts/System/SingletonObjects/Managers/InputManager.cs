@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Client
 {
@@ -14,8 +13,9 @@ namespace Client
 
     public class InputManager : Singleton<InputManager>
     {
-        public readonly int SKILL_NUM = (int)eInputSystem.MaxValue;
-        
+        public readonly int SKILL_NUM = (int)eInputSystem.MaxValue - 1; //None을 고려
+
+        #region ENUM
         /// <summary>
         /// Input system에서 입력과 바인딩할 스킬의 종류들을 나타냅니다.
         /// Skill_Num을 사용할 경우 무조건 1부터 인덱싱하기.(None 때문에)
@@ -39,13 +39,12 @@ namespace Client
             midLevel4,
             MaxValue
         }
-
+        #endregion
         #region Singleton
         private InputManager()
         { }
         #endregion
-        
-      
+        #region Containers 
         // SkillBindDict만 추후 스킬들 가지고 있는 스크립트에서 할당 필요할 때 사용 가능
         public Dictionary<eInputSystem, Action<InputParameter>> SkillBindDict;
 
@@ -53,8 +52,12 @@ namespace Client
         private Dictionary<KeyCode, eMiddleLevel> WinKeyBind;
 
         private Dictionary<int, eInputSystem> AndBtnBind;
- 
-        // 여기다가 키코드 인식할 함수 하나하나 다 더할거임.
+
+        //바인딩이 해제된 eInputSystem은 여기로 들어간다. 여기에 하나라도 요소가 있다면 설정을 끝마칠 수 없게 해야함.
+        private List<eInputSystem> RecoverNeededBinds = new List<eInputSystem>();
+        #endregion
+
+        // 키코드 인식할 함수들을 가짐. Update 기반으로 돌아감.
         public Action InputAction;
 
         public override void Init()
@@ -134,6 +137,16 @@ namespace Client
             }
         }
 
+        public void ResetIngameBind()
+        {
+            if (InputAction != null)
+            {
+                InputAction = null;
+            }
+            else KeyBind();
+        }
+
+
         /// <summary>
         /// Update 기반으로, 키 또는 버튼의 입력을 감지하여 액션 실행
         /// </summary>
@@ -142,6 +155,8 @@ namespace Client
             if(InputAction != null)
                 InputAction.Invoke();
         }
+
+        #region 키 설정 관련 메서드
 
         /// <summary>
         /// 설정창에서 키 바인딩에 대한 정보를 띄우기 위해서만 사용합니다.
@@ -159,11 +174,62 @@ namespace Client
         /// 설정창에서 키 세팅을 할 때 키코드를 받아서 딕셔너리를 편집
         /// </summary>
         /// <param name="setKey"></param>
-        public void SetKeyBinds(KeyCode setKey)
+        public void SetKeyBinds(KeyCode originKey, KeyCode setKey, eInputSystem targetInput)
         {
+            if (!WinKeyBind.ContainsKey(setKey))
+            {
+                //새 키가 유효하지 않을 때
+                Debug.Log($"{setKey}는 반영되어있지 않은 키의 종류입니다. 다른 키를 입력해주세요.");
+            }
+            else if (originKey == setKey) { }
+            else
+            {
+                // 새 키가 유효할 때
+                eMiddleLevel newMidKey = WinKeyBind[setKey];
+                eMiddleLevel originMidKey = WinKeyBind.ContainsKey(originKey) ? WinKeyBind[originKey] : eMiddleLevel.None;
 
+                // 새 키가 바인딩되어있지 않았다면
+                if (!MidKeyBind.ContainsKey(newMidKey))
+                {
+                    // 일단 추가를 하고, 타겟 행동이 바인딩되어있었다면 그것만 끊어준다.
+                    MidKeyBind.Add(newMidKey, targetInput);
+                    KeySetPrefab.SetBindFromOutside((int)targetInput - 1, setKey);
+                    if (!(originMidKey == eMiddleLevel.None))
+                        MidKeyBind.Remove(originMidKey);
+                }
+                else
+                {
+                    // 새 키가 이미 다른 스킬에 바인딩되어 있었다면
+                    Debug.Log($"그 키({setKey})는 이미 다른 기능에 바인딩되어있습니다. " +
+                        $"원래 바인딩을 해제하고 새 바인딩으로 추가합니다. 원래 기능의 바인딩을 완료해주세요.");
+
+                    //원래 키의 바인딩을 없애고 새 바인딩을 넣어준다. 만약 필요한 수만큼 세팅이 안됐다면 마저 하고 닫을 수 있도록 조건 세팅이 필요하다.
+                    KeySetPrefab.SetBindFromOutside((int)MidKeyBind[newMidKey] - 1, KeyCode.None);
+                    MidKeyBind.Remove(newMidKey);
+
+                    if (originMidKey == eMiddleLevel.None)
+                        MidKeyBind.Add(newMidKey, targetInput);
+                    else
+                        MidKeyBind.Add(newMidKey, MidKeyBind[originMidKey]);
+                    KeySetPrefab.SetBindFromOutside((int)targetInput - 1, setKey);                   
+                    MidKeyBind.Remove(originMidKey);
+                }               
+            }
         }
 
+        public bool CheckBindingIntegrity()
+        {
+            if (MidKeyBind.Count < SKILL_NUM) 
+            {
+                Debug.Log("스킬 바인딩을 마무리해주세요.");
+                return false;
+            }
+            else return true;
+        }
+
+        #endregion
+
+        #region Throwing Skills
         /// <summary>
         /// 버튼을 눌렀을 때 Input Manager에서 딕셔너리 통해 아~ 이거 쓰려는구나! 하고 쓰게 해준다.
         /// InputParameter은 어떻게 받아야하는걸까...?
@@ -212,5 +278,6 @@ namespace Client
                 }
             }            
         }
+        #endregion
     }
 }
