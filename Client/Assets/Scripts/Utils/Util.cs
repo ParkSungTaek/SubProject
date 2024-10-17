@@ -2,10 +2,11 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-
-
 namespace Client
 {
+    /// <summary>
+    /// (주의 무거움) = Update에서 쓰기에는 무리 정도로 이해하면 Good
+    /// </summary>
     public class Util
     {
         /// <summary>
@@ -48,6 +49,38 @@ namespace Client
 
             return null;
         }
+        /// <summary>
+        /// Game Object의 부모 중 T 컴포넌트를 가진 부모 얻기 (주의 무거움)
+        /// </summary>
+        /// <param name="go"> 부모 객체 </param>
+        /// <param name="name">자식의 이름</param>
+        /// <param name="recursive"> 재귀적 탐색 여부</param>
+        public static T FindParent<T>(GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Component
+        {
+            if (go == null) return null;
+
+            Transform parentTransform = go.transform.parent;
+
+            if (parentTransform == null)
+                return null;
+
+            if (recursive == false)
+            {
+                T traget = parentTransform.GetComponent<T>();
+                return traget;
+            }
+            else
+            {
+                T traget = parentTransform.GetComponent<T>();
+                if (traget == null)
+                {
+                    return FindParent<T>(parentTransform.gameObject, name, recursive);
+                }
+                return traget;
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Game Object 전용 FindChild (주의 무거움)
@@ -64,7 +97,7 @@ namespace Client
 
         ///////////////////////////////////////////
         /// <summary>
-        /// Json 정보를 Write하는 방법 
+        /// Json 정보를 Write하는 방법 (주의 무거움)
         /// UNITY_EDITOR 와 UNITY_ANDROID를 기준으로 작성
         /// </summary>
         /// <typeparam name="Handler"> Data Type </typeparam>
@@ -78,10 +111,10 @@ namespace Client
             {
                 _name = typeof(Handler).Name;
 
-                int idx = _name.IndexOf("Handler");
-                if (idx != -1)
+                int Index = _name.IndexOf("Handler");
+                if (Index != -1)
                 {
-                    _name = string.Concat(_name.Substring(0, idx), 's');
+                    _name = string.Concat(_name.Substring(0, Index), 's');
                 }
             }
 
@@ -123,7 +156,7 @@ namespace Client
         }
 
         /// <summary>
-        /// Json 정보를 Read하는 방법 
+        /// Json 정보를 Read하는 방법 (주의 무거움)
         /// UNITY_EDITOR 와 UNITY_ANDROID를 기준으로 작성
         /// </summary>
         /// <typeparam name="Handler"> Data Type </typeparam>
@@ -135,10 +168,10 @@ namespace Client
             {
                 _name = typeof(Handler).Name;
 
-                int idx = _name.IndexOf("Handler");
-                if (idx != -1)
+                int Index = _name.IndexOf("Handler");
+                if (Index != -1)
                 {
-                    _name = string.Concat(_name.Substring(0, idx), 's');
+                    _name = string.Concat(_name.Substring(0, Index), 's');
                 }
             }
             Handler _gameData;

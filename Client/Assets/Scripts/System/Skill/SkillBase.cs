@@ -5,21 +5,37 @@ using UnityEngine.Playables;
 
 namespace Client
 {
+    /// <summary>
+    /// ½ºÅ³ °´Ã¼
+    /// </summary>
     public class SkillBase : MonoBehaviour
     {
-        private PlayableDirector playableDirector;
+        private PlayableDirector _PlayableDirector;
+        private CharBase _CharBase;
 
+        public PlayableDirector PlayableDirector => _PlayableDirector;
+        public CharBase CharPlayer => _CharBase;
+        
+        public void SetCharBase(CharBase charBase)
+        {
+            _CharBase = charBase;
+        }
         private void Awake()
         {
-            playableDirector = GetComponent<PlayableDirector>();
-            if (playableDirector == null)
+            _PlayableDirector = GetComponent<PlayableDirector>();
+            if (_PlayableDirector == null)
             {
                 Debug.LogError($"{transform.name} PlayableDirector is Null");
             }
-            //playableDirector.SetGenericBinding()
         }
 
+        public void PlaySkill()
+        {
+            if (_PlayableDirector == null)
+                return;
 
+            _PlayableDirector.Play();
+        }
 
     }
 }

@@ -9,6 +9,7 @@ namespace Client
         protected override SystemEnum.eCharType CharType => SystemEnum.eCharType.NPC;
         protected override void CharInit()
         {
+            base.CharInit();
             CharManager.Instance.SetChar<CharNPC>(this);
         }
 

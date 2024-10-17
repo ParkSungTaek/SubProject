@@ -46,7 +46,12 @@ namespace Client
                 }
                 Debug.Log(type.Name);
                 Dictionary<long, SheetData> sheet = instance.LoadData();
-                _cache.Add(type.Name, sheet);
+
+                if (_cache.ContainsKey(type.Name) == false)
+                {
+                    _cache.Add(type.Name, sheet);
+                }
+                
             }
         }
 

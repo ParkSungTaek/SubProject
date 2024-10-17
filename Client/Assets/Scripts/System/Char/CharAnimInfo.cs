@@ -12,7 +12,7 @@ namespace Client
         private CharBase _charBase; // 애니메이션 플레이 캐릭터
 
         public Animator Animator { get; set; } = null; // 애니메이션 
-
+        
         public CharAnimInfo(Animator animator)
         {
             Animator = animator;

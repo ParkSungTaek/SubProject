@@ -56,19 +56,19 @@ namespace Client
         /// <summary>
         /// bind된 object에서 원하는 object 얻기
         /// </summary>
-        protected T Get<T>(int idx) where T : UnityEngine.Object
+        protected T Get<T>(int Index) where T : UnityEngine.Object
         {
             UnityEngine.Object[] objects = null;
             if (_objects.TryGetValue(typeof(T), out objects) == false)
                 return null;
 
-            return objects[idx] as T;
+            return objects[Index] as T;
         }
         #region Get_Override
-        protected GameObject GetGameObject(int idx) => Get<GameObject>(idx);
-        protected TMP_Text GetText(int idx) => Get<TMP_Text>(idx);
-        protected Image GetImage(int idx) => Get<Image>(idx);
-        protected Button GetButton(int idx) => Get<Button>(idx);
+        protected GameObject GetGameObject(int Index) => Get<GameObject>(Index);
+        protected TMP_Text GetText(int Index) => Get<TMP_Text>(Index);
+        protected Image GetImage(int Index) => Get<Image>(Index);
+        protected Button GetButton(int Index) => Get<Button>(Index);
         #endregion Get_Override
 
         /// <summary>

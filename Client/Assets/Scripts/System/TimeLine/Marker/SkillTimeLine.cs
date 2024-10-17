@@ -10,7 +10,7 @@ namespace Client
     /// <summary>
     /// 스킬 타임라인용 마커
     /// </summary>
-    public class NewSkillTimeLine: Marker, INotificationReceiver
+    public class SkillMarker: Marker, INotificationReceiver
     {
         public void OnNotify(Playable origin, INotification notification, object context)
         {
@@ -26,9 +26,15 @@ namespace Client
 
     public class SkillTimeLine : MonoBehaviour, INotificationReceiver
     {
+        Animator animator;
+        private void Awake()
+        {
+            
+        }
+
         public void OnNotify(Playable origin, INotification notification, object context)
         {
-            NewSkillTimeLine Skill = notification as NewSkillTimeLine;
+            SkillMarker Skill = notification as SkillMarker;
             Debug.Log("HelloWorld!asdfasdfasdf");
         }
     }

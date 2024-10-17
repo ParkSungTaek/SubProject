@@ -30,6 +30,9 @@ namespace Client
 
         private GameObject _LWeapon = null;  // 왼손 무기
         private GameObject _RWeapon = null;  // 오른손 무기
+        private Transform _CharTransform = null; // 캐릭터 트렌스폼
+        private Transform _CharUnitRoot = null; // 캐릭터 유닛 루트 트렌스폼
+
         private PlayerState _currentState;  // 현재 상태
         private bool _isAction = false;  // 행동중인가? 판별
         private Dictionary<PlayerState, int> _indexPair = new(); // 
@@ -51,11 +54,15 @@ namespace Client
         public CharFSMInfo CharFSM => _charFSM; // 캐릭터 현재 유한상태 머신
         public CharSKillInfo CharSKillInfo => _charSKillInfo; // 캐릭터 스킬
         public CharAnimInfo CharAnimInfo => _charAnimInfo; // 캐릭터 스킬
+        public Transform CharTransform => _CharTransform;
+        private Transform CharUnitRoot => _CharUnitRoot; // 캐릭터 유닛 루트 트렌스폼
 
         protected CharBase() { }
 
         private void Awake()
         {
+            _CharTransform = transform;
+            _CharUnitRoot = Util.FindChild<Transform>(gameObject,"UnitRoot");
             _id = CharManager.Instance.GetNextID();
             _executionInfo = new ExecutionInfo();
             _executionInfo.Init();
