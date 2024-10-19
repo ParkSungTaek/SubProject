@@ -24,7 +24,11 @@ namespace Client
 
             BindButton();
             ShowBindingSlots();
-            InputManager.Instance.ResetIngameBind();
+        }
+
+        private void OnEnable()
+        {
+            InputManager.Instance.InputDeactivate();
         }
 
         /// <summary>
@@ -43,7 +47,7 @@ namespace Client
                     "UI/Scene/KeySetPrefab", verticalPanel.transform);
                 KeySetPrefab keySet = bindPrefab.GetComponent<KeySetPrefab>();
                 keySet.SetBindInfo(directPair.Value, directPair.Key);
-                KeySetPrefab.keySets[(int)directPair.Value - 1] = keySet;
+                //KeySetPrefab.keySets[(int)directPair.Value - 1] = keySet;
             }
         }
 
@@ -58,7 +62,7 @@ namespace Client
             if (!InputManager.Instance.CheckBindingIntegrity()) return;
             UIManager.Instance.ClosePopupUI();
             KeySetPrefab._interactable = true;
-            InputManager.Instance.ResetIngameBind();
+            InputManager.Instance.InputActivate();
         }
         #endregion
 

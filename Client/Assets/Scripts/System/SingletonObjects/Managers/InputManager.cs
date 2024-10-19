@@ -13,7 +13,7 @@ namespace Client
 
     public class InputManager : Singleton<InputManager>
     {
-        public readonly int SKILL_NUM = (int)eInputSystem.MaxValue - 1; //None을 고려
+        public readonly int SKILL_NUM = (int)eInputSystem.MaxValue; //None을 고려
 
         #region ENUM
         /// <summary>
@@ -46,17 +46,17 @@ namespace Client
         #endregion
         #region Containers 
         // SkillBindDict만 추후 스킬들 가지고 있는 스크립트에서 할당 필요할 때 사용 가능
-        public Dictionary<eInputSystem, Action<InputParameter>> SkillBindDict;
+        public Dictionary<eInputSystem, Action<InputParameter>> SkillBindDict { get; set; } = new Dictionary<eInputSystem, Action<InputParameter>>();
 
         private Dictionary<eMiddleLevel, eInputSystem> MidKeyBind;
         private Dictionary<KeyCode, eMiddleLevel> WinKeyBind;
 
         private Dictionary<int, eInputSystem> AndBtnBind;
 
-        //바인딩이 해제된 eInputSystem은 여기로 들어간다. 여기에 하나라도 요소가 있다면 설정을 끝마칠 수 없게 해야함.
-        private List<eInputSystem> RecoverNeededBinds = new List<eInputSystem>();
         #endregion
 
+        //KeySetPrefab 구독용 액션.
+        public Action BindAction { get; set; }
         // 키코드 인식할 함수들을 가짐. Update 기반으로 돌아감.
         public Action InputAction;
 
@@ -83,6 +83,7 @@ namespace Client
                 };
                 MidKeyBind = new Dictionary<eMiddleLevel, eInputSystem>()
                 {
+                    {eMiddleLevel.None, eInputSystem.None },
                     {eMiddleLevel.midLevel1, eInputSystem.Skill1},
                     {eMiddleLevel.midLevel2, eInputSystem.Skill2},
                     {eMiddleLevel.midLevel3, eInputSystem.Skill3},
@@ -130,22 +131,23 @@ namespace Client
 
         void KeyBind()
         {
-            foreach(var keycode in WinKeyBind.Keys)
+            foreach (var keycode in WinKeyBind.Keys)
             {
                 InputAction -= () => ThrowSkill(keycode);
                 InputAction += () => ThrowSkill(keycode);
             }
         }
 
-        public void ResetIngameBind()
+        public void InputDeactivate()
         {
-            if (InputAction != null)
-            {
-                InputAction = null;
-            }
-            else KeyBind();
+            GameManager.Instance.DeleteOnUpdate(OnUpdate);
         }
 
+        public void InputActivate()
+        {
+            GameManager.Instance.DeleteOnUpdate(OnUpdate);
+            GameManager.Instance.AddOnUpdate(OnUpdate);
+        }
 
         /// <summary>
         /// Update 기반으로, 키 또는 버튼의 입력을 감지하여 액션 실행
@@ -193,28 +195,51 @@ namespace Client
                 {
                     // 일단 추가를 하고, 타겟 행동이 바인딩되어있었다면 그것만 끊어준다.
                     MidKeyBind.Add(newMidKey, targetInput);
-                    KeySetPrefab.SetBindFromOutside((int)targetInput - 1, setKey);
                     if (!(originMidKey == eMiddleLevel.None))
                         MidKeyBind.Remove(originMidKey);
                 }
                 else
                 {
                     // 새 키가 이미 다른 스킬에 바인딩되어 있었다면
+                    //원래 키의 바인딩을 없애고 새 바인딩을 넣어준다. 만약 필요한 수만큼 세팅이 안됐다면 마저 하고 닫을 수 있도록 조건 세팅이 필요하다.
                     Debug.Log($"그 키({setKey})는 이미 다른 기능에 바인딩되어있습니다. " +
                         $"원래 바인딩을 해제하고 새 바인딩으로 추가합니다. 원래 기능의 바인딩을 완료해주세요.");
 
-                    //원래 키의 바인딩을 없애고 새 바인딩을 넣어준다. 만약 필요한 수만큼 세팅이 안됐다면 마저 하고 닫을 수 있도록 조건 세팅이 필요하다.
-                    KeySetPrefab.SetBindFromOutside((int)MidKeyBind[newMidKey] - 1, KeyCode.None);
                     MidKeyBind.Remove(newMidKey);
-
                     if (originMidKey == eMiddleLevel.None)
                         MidKeyBind.Add(newMidKey, targetInput);
                     else
+                    {
                         MidKeyBind.Add(newMidKey, MidKeyBind[originMidKey]);
-                    KeySetPrefab.SetBindFromOutside((int)targetInput - 1, setKey);                   
-                    MidKeyBind.Remove(originMidKey);
-                }               
+                        MidKeyBind.Remove(originMidKey);
+                    }
+                }
+
+                BindAction.Invoke();
             }
+        }
+        
+        /// <summary>
+        /// 키코드에 연결된 미들키가 바인딩되어있는지 여부 점검
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool CheckKeyValidity(KeyCode e)
+        {
+            if(!WinKeyBind.ContainsKey(e)) return false;
+            return MidKeyBind.ContainsKey(WinKeyBind[e]);
+        }
+
+        public bool CheckPrefabPairValidity(KeyCode k, eInputSystem e)
+        {
+            return MidKeyBind[WinKeyBind[k]] == e;
+        }
+
+        public KeyCode SearchNewKeyCode(eInputSystem e)
+        {
+            eMiddleLevel eMid = MidKeyBind.FirstOrDefault(x => x.Value == e).Key;
+            if(eMid == eMiddleLevel.None) return KeyCode.None;
+            return WinKeyBind.FirstOrDefault(x => x.Value == eMid).Key;
         }
 
         public bool CheckBindingIntegrity()
@@ -266,13 +291,21 @@ namespace Client
             {
                 if (WinKeyBind.ContainsKey(keyCode))
                 {
-                    Action<InputParameter> targetAction = SkillBindDict[MidKeyBind[WinKeyBind[keyCode]]];
+                    eMiddleLevel midByKey =  WinKeyBind[keyCode];
+                    eInputSystem inputByKey = MidKeyBind[midByKey];
+                    Action<InputParameter> targetAction = SkillBindDict[inputByKey];
                     if (targetAction == null)
                     {
                         Debug.Log($"으잉 스킬 {keyCode}에 바인딩된거 없는뎁쇼");
                         return;
                     }
 
+                    /*
+                     * 현재는 마땅히 쓸 게 없어서 new InputParameter로 했는데,
+                     * 추후 InputParamGenerator같은 메서드를 만들어서, 
+                     * 각 장비/캐릭터에 붙은 스킬들에 대해 정보(InputParameter)들을 인스턴스화해서
+                     * 나중엔 InputParameter param = InputParamGenererator(어쩌구);로 한 param을 인자에 넣으면 될것이다.
+                     */
                     targetAction.Invoke(new InputParameter());
                     Debug.Log($"옛다 {targetAction} 스킬이나 먹어라~");
                 }
