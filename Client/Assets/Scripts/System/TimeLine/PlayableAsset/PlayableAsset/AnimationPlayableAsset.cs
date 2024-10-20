@@ -12,16 +12,10 @@ namespace Client
         private AnimationClip animationClip;
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            if (charBase == null)
-            {
-                SkillBase skill = owner.GetComponent<SkillBase>();
-                if (skill == null)
-                    return new();
-
-                charBase = skill.CharPlayer;
-            }
+            base.CreatePlayable(graph, owner);
 
             var playableBehaviour = new AnimationPlayableBehaviour();
+
             playableBehaviour.animator = charBase.CharAnimInfo.Animator;
             playableBehaviour.animationClip = animationClip;
             var scriptPlayable = ScriptPlayable<AnimationPlayableBehaviour>.Create(graph, playableBehaviour);

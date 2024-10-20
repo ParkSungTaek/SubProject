@@ -125,6 +125,15 @@ namespace Client
             Attack,
             Buff,
 
+            MaxCount
+        }
+
+        public enum eIsAttack
+        {
+            None,
+
+            Player,
+            Monster,
 
             MaxCount
         }

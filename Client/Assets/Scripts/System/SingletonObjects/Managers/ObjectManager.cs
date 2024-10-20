@@ -51,7 +51,9 @@ namespace Client
 
         /// <summary> GameObject 생성 </summary>
         public GameObject Instantiate(string path, Transform parent = null) => Instantiate<GameObject>(path, parent);
-        
+
+        /// <summary> GameObject 생성 </summary>
+        public GameObject Instantiate(GameObject gm, Transform parent = null) => GameObject.Instantiate(gm, parent);
         /// <summary> AudioClip Load </summary>
         public AudioClip LoadAudioClip(string path) => Instance.Load<AudioClip>($"Sounds/{path}");
 

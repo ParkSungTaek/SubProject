@@ -10,6 +10,7 @@ namespace Client
     /// </summary>
     public abstract class SkillTimeLinePlayableBehaviour : PlayableBehaviour
     {
-       
+        public CharBase charBase;
+        public SkillBase skillBase;
     }
 }

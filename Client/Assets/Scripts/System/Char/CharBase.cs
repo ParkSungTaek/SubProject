@@ -45,6 +45,8 @@ namespace Client
         private Vector3 _rightPos = new Vector3(1, 0, 0);
         private Vector2 _leftPos = new Vector3(-1, 0, 0);
 
+        public Vector3 LookAtPos { get; private set; } = Vector3.right;
+
         protected virtual SystemEnum.eCharType CharType => SystemEnum.eCharType.None;
 
         public Dictionary<eExecutionGroupType, List<ExecutionBase>> ExecutionBaseDic => _executionInfo.ExecutionBaseDic;
@@ -155,19 +157,18 @@ namespace Client
                 Debug.LogWarning($"{transform.name} 의 Stat가 없음");
                 return;
             }
-            Vector3 MovePos = Vector3.zero;
             if (vector.x > 0)
             {
                 transform.eulerAngles = _rightRotation;
-                MovePos = _rightPos;
+                LookAtPos = _rightPos;
             }
             else 
             {
                 transform.eulerAngles = _lefRotationtion;
-                MovePos = _leftPos;
+                LookAtPos = _leftPos;
 
             }
-            Vector3 deltaMove = MovePos * _charStat.GetStat(eState.NSpeed);
+            Vector3 deltaMove = LookAtPos * _charStat.GetStat(eState.NSpeed);
             deltaMove = deltaMove * Time.deltaTime;
 
             transform.position += deltaMove;

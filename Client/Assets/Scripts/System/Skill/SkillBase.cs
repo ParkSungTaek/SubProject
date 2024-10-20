@@ -29,13 +29,12 @@ namespace Client
             }
         }
 
-        public void PlaySkill()
+        public void PlaySkill(InputParameter parameter)
         {
             if (_PlayableDirector == null)
                 return;
 
             _PlayableDirector.Play();
         }
-
     }
 }

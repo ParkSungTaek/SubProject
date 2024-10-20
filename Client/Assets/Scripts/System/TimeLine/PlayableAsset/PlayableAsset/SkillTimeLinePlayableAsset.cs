@@ -11,5 +11,18 @@ namespace Client
     public abstract class SkillTimeLinePlayableAsset : PlayableAsset
     {
         protected CharBase charBase;
+        protected SkillBase skillBase;
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+        {
+            if (charBase == null)
+            {
+                skillBase = owner.GetComponent<SkillBase>();
+                if (skillBase == null)
+                    return new();
+
+                charBase = skillBase.CharPlayer;
+            }
+            return new Playable();
+        }
     }
 }

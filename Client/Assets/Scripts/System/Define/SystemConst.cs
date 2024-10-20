@@ -20,6 +20,8 @@ namespace Client
     public class SystemString
     {
         public const string AudioSystem = "AudioSystem";
+        public const string MonsterHitCollider = "Prefabs/Interaction/Battle/Attack/AttackMonsterCollider";
+        public const string PlayerHitCollider = "Prefabs/Interaction/Battle/Attack/AttackPlayerCollider";
 
     }
 }
