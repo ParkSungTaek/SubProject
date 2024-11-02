@@ -23,6 +23,7 @@ namespace Client
         private CharFSMInfo _charFSM; // 캐릭터 현재 유한상태 머신
         private CharSKillInfo _charSKillInfo; // 캐릭터 스킬
         private CharAnimInfo _charAnimInfo; // 캐릭터 스킬
+        private CharItemInfo _charItemInfo; // 캐릭터 보유/장비 아이템
 
         private CharStat _charStat = null;  // Stat 정보
         private CharData _charData = null;  // 캐릭터 데이터
@@ -58,7 +59,7 @@ namespace Client
         public CharAnimInfo CharAnimInfo => _charAnimInfo; // 캐릭터 스킬
         public Transform CharTransform => _CharTransform;
         private Transform CharUnitRoot => _CharUnitRoot; // 캐릭터 유닛 루트 트렌스폼
-
+        private CharItemInfo CharItemInfo => _charItemInfo;
         protected CharBase() { }
 
         private void Awake()

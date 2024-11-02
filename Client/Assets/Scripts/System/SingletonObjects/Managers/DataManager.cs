@@ -85,7 +85,7 @@ namespace Client
             string key = typeof(T).ToString();
             key = key.Replace("Client.", "");
 
-            if (!_cache.ContainsKey(key))
+            if (_cache.ContainsKey(key))
             {
                 Debug.LogWarning($"{key} 데이터 테이블은 이미 존재합니다.");
             }
@@ -94,7 +94,7 @@ namespace Client
                 _cache.Add(key, new Dictionary<long, SheetData>());
             }
 
-            if (!_cache[key].ContainsKey(id))
+            if (_cache[key].ContainsKey(id))
             {
                 Debug.LogWarning($"{key} 타입 ID: {id} 칼럼은 이미 존재합니다. !(주의) 게임 중 데이터 칼럼을 변경할 수 없습니다!");
             }

@@ -137,5 +137,14 @@ namespace Client
 
             MaxCount
         }
+
+        public enum eItemType
+        {
+            None,
+
+            Equipment,
+            Consumable,
+            ETC,
+        }
     }
 }
