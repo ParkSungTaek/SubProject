@@ -1416,7 +1416,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Root/BodySet/P_Body/ArmSet/ArmR/P_RArm
+    path: Root/BodySet/P_Body/HeadSet/P_Head
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1428,7 +1428,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Root/BodySet/P_Body/ArmSet/ArmR/P_RArm
+    path: Root/BodySet/P_Body/HeadSet/P_Head
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1440,7 +1440,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Root/BodySet/P_Body/ArmSet/ArmR/P_RArm
+    path: Root/BodySet/P_Body/HeadSet/P_Head
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1488,7 +1488,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Root/BodySet/P_Body/HeadSet/P_Head
+    path: Root/BodySet/P_Body/ArmSet/ArmR/P_RArm
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1500,7 +1500,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Root/BodySet/P_Body/HeadSet/P_Head
+    path: Root/BodySet/P_Body/ArmSet/ArmR/P_RArm
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1512,7 +1512,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Root/BodySet/P_Body/HeadSet/P_Head
+    path: Root/BodySet/P_Body/ArmSet/ArmR/P_RArm
     classID: 4
     script: {fileID: 0}
     flags: 0

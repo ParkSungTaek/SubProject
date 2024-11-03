@@ -4,7 +4,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
-
 public enum PlayerState
 {
     IDLE,

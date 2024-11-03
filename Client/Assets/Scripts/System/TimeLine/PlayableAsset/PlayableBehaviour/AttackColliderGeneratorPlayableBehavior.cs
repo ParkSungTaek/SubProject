@@ -17,7 +17,6 @@ namespace Client
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
             Vector3 vec = OffSet;
-            vec.x = charBase.LookAtPos.x * vec.x;
             if (AttackCollider == null)
                 return;
 
