@@ -7,9 +7,8 @@ namespace Client
 {
     public struct ItemParameter
     {
-        public long ItemIndex;
+        public CharItemData itemData;
         public CharBase CharBase;
-        public eItemType eItemType;
     }
 
     public abstract class ItemBase
@@ -22,21 +21,21 @@ namespace Client
 
         public ItemBase(ItemParameter param)
         {
-            _ItemData = DataManager.Instance.GetData<CharItemData>(param.ItemIndex);
+            _ItemData = param.itemData;
             _CharBase = param.CharBase;
 
             if (_ItemData == null)
             {
-                Debug.LogError($"Execution : {param.ItemIndex} 데이터 획득 실패");
+                Debug.LogError($"Execution : 데이터 획득 실패");
             }
 
-            if(_ItemData.itemEffectExecutionList != null)
+            if (_ItemData.itemEffectExecutionList != null)
             {
                 foreach (var effectIndex in _ItemData.itemEffectExecutionList)
                 {
                     BuffParameter effectParam = new BuffParameter
                     {
-                        eExecutionType = SystemEnum.eExecutionType.StateBuff,
+                        eExecutionType = eExecutionType.StateBuff,
                         TargetChar = _CharBase,
                         CastChar = _CharBase,
                         ExecutionIndex = effectIndex
@@ -58,66 +57,28 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// 드래그 앤 드랍 또는 키다운으로 호출
+        /// </summary>
         public void DiscardItem()
         {
-
+            if (_CharBase != null)
+            {
+                GameObject tempParent = new GameObject("ItemParent");
+                tempParent.transform.position = _CharBase.transform.position;
+                ItemPrefab item = ObjectManager.Instance.Instantiate<ItemPrefab>(_ItemData.itemPrefabName, tempParent.transform);
+                item.SetItemWData(_ItemData);
+            }          
         }
             
 
     }
 
-    public class Equipment : ItemBase
-    {
-        public Equipment(ItemParameter param) : base(param)
-        {
-
-        }
-
-        enum eEquipType
-        {
-            Weapon,
-            Head,
-            Body,
-            Gloves,
-            Shoes            
-        }
-
-        public override void UseItem()
-        {
-            // 착용
-            // 
-        }
+   
 
 
-    }
+    
 
-
-    public class Consumable : ItemBase
-    {
-        public Consumable(ItemParameter param) : base(param)
-        {
-            
-        }
-
-        public override void UseItem()
-        {
-            base.UseItem();
-            // 소비
-            //  
-        }
-    }
-
-    public class ETCItem : ItemBase
-    {
-        public ETCItem(ItemParameter param) : base(param)
-        {
-
-        }
-
-        public override void UseItem()
-        {
-            //???
-        }
-    }
+    
 
 }

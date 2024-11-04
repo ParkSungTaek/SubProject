@@ -9,7 +9,7 @@ namespace Client
     {
         public static ItemBase ItemGenerate(ItemParameter itemParam)
         {
-            switch(itemParam.eItemType)
+            switch (itemParam.itemData.itemType)
             {
                 case eItemType.Equipment: return new Equipment(itemParam);
                 case eItemType.Consumable: return new Consumable(itemParam);

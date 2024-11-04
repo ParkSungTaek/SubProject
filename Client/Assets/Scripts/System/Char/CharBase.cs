@@ -59,7 +59,7 @@ namespace Client
         public CharAnimInfo CharAnimInfo => _charAnimInfo; // Ä³¸¯ÅÍ ½ºÅ³
         public Transform CharTransform => _CharTransform;
         private Transform CharUnitRoot => _CharUnitRoot; // Ä³¸¯ÅÍ À¯´Ö ·çÆ® Æ®·»½ºÆû
-        private CharItemInfo CharItemInfo => _charItemInfo;
+        public CharItemInfo CharItemInfo => _charItemInfo;
         protected CharBase() { }
 
         private void Awake()
