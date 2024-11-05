@@ -12,7 +12,7 @@ namespace DataGenerator
         static void Main(string[] args)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            string folderPath = "../../../Client/Assets/Data/XLSXS";
+            string folderPath = "../../../DataGenerator/XLSXS";
             string[] excelFiles = Directory.GetFiles(folderPath, "*.xlsx");
 
             foreach (string file in excelFiles)
