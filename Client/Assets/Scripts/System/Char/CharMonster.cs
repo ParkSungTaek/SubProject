@@ -12,5 +12,11 @@ namespace Client
             base.CharInit();
             CharManager.Instance.SetChar<CharMonster>(this);
         }
+
+        public void Patrol()
+        {
+            //Patrol
+        }
+
     }
 }

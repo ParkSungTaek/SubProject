@@ -145,6 +145,18 @@ namespace Client
             Equipment,
             Consumable,
             ETC,
+
+            MaxCount
+        }
+
+        public enum eScene
+        {
+            None,
+
+            GameScene,
+
+            MaxCount
+
         }
     }
 }

@@ -6,6 +6,7 @@ using static Client.AnimationDefine;
 using static Client.SystemEnum;
 using static Client.InputManager;
 using Client;
+using UnityEngine.AI;
 
 namespace Client
 {
@@ -14,10 +15,13 @@ namespace Client
     /// </summary>
     public abstract class CharBase : MonoBehaviour
     {
+
         [SerializeField] private long _index;  // CharData 테이블의 인덱스 
         [SerializeField] private Collider2D _FightCollider; // 전투 콜라이더
         [SerializeField] private Collider2D _MoveCollider;  // 이동 콜라이더
         [SerializeField] private GameObject _SkillRoot;
+        [SerializeField] protected NavMeshAgent _NavMeshAgent;
+
 
         private ExecutionInfo _executionInfo = null;  // 기능 정보
         private CharFSMInfo _charFSM; // 캐릭터 현재 유한상태 머신
@@ -71,7 +75,8 @@ namespace Client
             _executionInfo.Init();
             _charFSM = new CharFSMInfo(this);
             _charData = DataManager.Instance.GetData<CharData>(_index);
-            
+            _NavMeshAgent = GetComponent<NavMeshAgent>();
+
             if (_charData != null)
             {
                 CharStatData charStat = DataManager.Instance.GetData<CharStatData>(_charData.charStatId);

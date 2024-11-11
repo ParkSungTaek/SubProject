@@ -1,0 +1,4 @@
+﻿스킬Index,#설명 ,생성Scene,몬스터 프리팹명,#생성위치,생성위치,패트롤1,패트롤2
+index,#,Scene,monsterName,# 천분률 1250 = 1.250,monsterSpawnVec,monsterSpawnVec,monsterSpawnVec
+long,#,eScene,string,#[X.Y],int[],int[],int[]
+1000001,,GameScene,TestMonster,,[0.0],[-3.0],[3.0]
