@@ -44,7 +44,8 @@ namespace Client
 
         public void EquipItem(long ItemIndex, Equipment equipment)
         {
-            if (_equiped == null || _dicItem == null || !_dicItem.ContainsKey(ItemIndex)) return;
+            if (_equiped == null || _dicItem == null ) return;
+            if (!_dicItem.ContainsKey(ItemIndex)) return;
             _equiped.Add(ItemIndex, equipment);
             _dicItem.Remove(ItemIndex);
         }
@@ -53,6 +54,7 @@ namespace Client
         public void UnEquipItem(long ItemIndex, Equipment equipment)
         {
             if (_equiped == null || _dicItem == null) return;
+            if (!_equiped.ContainsKey(ItemIndex)) return;
             _equiped.Remove(ItemIndex);
             _dicItem.Add(ItemIndex, equipment);
         }

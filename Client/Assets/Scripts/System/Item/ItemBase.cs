@@ -64,10 +64,9 @@ namespace Client
         {
             if (_CharBase != null)
             {
-                GameObject tempParent = new GameObject("ItemParent");
-                tempParent.transform.position = _CharBase.transform.position;
-                ItemPrefab item = ObjectManager.Instance.Instantiate<ItemPrefab>(_ItemData.itemPrefabName, tempParent.transform);
+                ItemPrefab item = ObjectManager.Instance.Instantiate<ItemPrefab>(_ItemData.itemPrefabName);
                 item.SetItemWData(_ItemData);
+                item.transform.position = _CharBase.transform.position;
             }          
         }
             

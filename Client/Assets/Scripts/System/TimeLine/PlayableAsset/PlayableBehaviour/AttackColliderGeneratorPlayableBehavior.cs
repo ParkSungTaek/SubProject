@@ -28,10 +28,12 @@ namespace Client
             _collider.transform.localScale = Size;
 
             // GetComponent 이래도 되려나....
-            AttackCollider attackCollider = _collider.GetComponent<AttackCollider>();
+            //AttackCollider attackCollider = _collider.GetComponent<AttackCollider>();
 
-            if (attackCollider == null)
-                return;
+            //if (attackCollider == null)
+                //return;
+
+            if (!_collider.TryGetComponent(out AttackCollider attackCollider)) return;
 
             attackCollider.SetData(charBase,skillBase);
         }
