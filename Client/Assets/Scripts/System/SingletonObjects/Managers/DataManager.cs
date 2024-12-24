@@ -14,14 +14,22 @@ namespace Client
     public class DataManager : Singleton<DataManager>
     {
         /// 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
-        Dictionary<string, Dictionary<long, SheetData>> _cache = new Dictionary<string, Dictionary<long, SheetData>>();
-
+        private Dictionary<string, Dictionary<long, SheetData>> _cache = new Dictionary<string, Dictionary<long, SheetData>>();
 
         #region Singleton
         private DataManager()
         { }
         #endregion
-        
+
+        #region 개별 데이터
+
+        // 플레이어 위치정보
+        private Dictionary<SystemEnum.eScene, Vector3> _positionMap = new Dictionary<SystemEnum.eScene, Vector3>();
+        public Dictionary<SystemEnum.eScene, Vector3> PositionMap => _positionMap;
+
+
+        #endregion
+
         public override void Init()
         {
             DataLoad();
@@ -51,7 +59,7 @@ namespace Client
                 {
                     _cache.Add(type.Name, sheet);
                 }
-                
+                SetTypeData(type.Name);
             }
         }
 
@@ -104,9 +112,37 @@ namespace Client
             }
         }
 
+        #region 개별 데이터
 
-        
-        
+        // 개별 데이터 가공
+        private void SetTypeData<T>(T data) where T : SheetData
+        {
+            if (typeof(T) == typeof(CharPositionData)) { SetCharPositionData(); } 
+        }
+        private void SetTypeData(string data)
+        {
+            if (data == typeof(CharPositionData).ToString()) { SetCharPositionData(); }
+        }
+
+        // 플레이어 위치정보
+        private void SetCharPositionData()
+        {
+            string key = typeof(CharPositionData).ToString();
+            Dictionary<long, SheetData> charPositionMap = _cache[key];
+            foreach (var posMap in charPositionMap.Values)
+            {
+                CharPositionData charPosition = posMap as CharPositionData;
+                float xPos = (float)charPosition.xPos / SystemConst.Persent;
+                float yPos = (float)charPosition.yPos / SystemConst.Persent;
+                float zPos = (float)charPosition.zPos / SystemConst.Persent;
+                
+                Vector3 vector = new Vector3(xPos, yPos, zPos);
+                _positionMap.Add(charPosition.mapScene, vector);
+            }
+        }
+        #endregion
+
+
 
     }
 }

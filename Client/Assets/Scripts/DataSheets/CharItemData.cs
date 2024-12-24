@@ -19,7 +19,7 @@ public long index; // 아이템Index
 		public SystemEnum.eItemType itemType; // 아이템 타입
 		public bool itemDisposable; // 일회용여부
 		public List<long> itemEffectExecutionList; // 아이템효과(Execution)
-		public long skillIndex; // 사용가능스킬
+		public long skillIndex; // 사용가능스킬그룹
 		
 
         public override Dictionary<long, SheetData> LoadData()

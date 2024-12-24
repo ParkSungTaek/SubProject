@@ -19,7 +19,7 @@ namespace Client
         #region 생성자
         CharManager() { }
         #endregion
-
+        public long SelectedCharIndex { get; private set; } = 1;
         // 고유 ID 생성
         public long GetNextID() => _nextID++;
 
@@ -101,12 +101,12 @@ namespace Client
 
             return true;
         }
-        public CharBase CharGenerate(CharParameter buffParam)
+        public CharBase CharGenerate(CharParameter charParam)
         {
-            CharData charData = DataManager.Instance.GetData<CharData>(buffParam.CharIndex);
+            CharData charData = DataManager.Instance.GetData<CharData>(charParam.CharIndex);
             if (charData == null)
             {
-                Debug.LogWarning($"CharFactory : {buffParam.CharIndex} 의 CharIndex를 찾을 수 없음");
+                Debug.LogWarning($"CharFactory : {charParam.CharIndex} 의 CharIndex를 찾을 수 없음");
                 return null;
             }
             GameObject gameObject = ObjectManager.Instance.Instantiate($"Char/{charData.charPrefab}");
@@ -117,6 +117,27 @@ namespace Client
             }
 
             CharBase charBase = gameObject.GetComponent<CharBase>();
+            return charBase;
+        }
+
+        public CharBase SelectedPlayableCharGenerate()
+        {
+            CharParameter charParam = new CharParameter();
+            charParam.CharIndex = SelectedCharIndex;
+            charParam.Scene = SceneManager.NowScene;
+            if (DataManager.Instance.PositionMap.ContainsKey(charParam.Scene))
+            {
+                charParam.GeneratePos = DataManager.Instance.PositionMap[charParam.Scene];
+            }
+            CharBase charBase = CharGenerate(charParam);
+            if(charBase.CharCamaraPos != null)
+            {
+                Camera.main.transform.parent = charBase.CharCamaraPos.transform;
+                Camera.main.transform.localPosition = Vector3.zero;
+                Camera.main.transform.localEulerAngles = Vector3.zero;
+
+            }
+
             return charBase;
         }
     }

@@ -1,4 +1,4 @@
-﻿아이템Index,#아이템 설명,아이템명,아이템프리팹명,아이템스프라이트명,아이템 타입,일회용여부,아이템효과(Execution),사용가능스킬
+﻿아이템Index,#아이템 설명,아이템명,아이템프리팹명,아이템스프라이트명,아이템 타입,일회용여부,아이템효과(Execution),사용가능스킬그룹
 index,#,itemName,itemPrefabName,itemSpriteName,itemType,itemDisposable,itemEffectExecutionList,skillIndex
 long,#,string,string,string,eItemType,bool,long[],long
 2001,방어력 +30,파란색 가운,blueGown,blueGown,Equipment,FALSE,[0],0

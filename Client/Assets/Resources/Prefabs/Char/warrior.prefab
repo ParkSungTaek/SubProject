@@ -1547,7 +1547,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2913938215660765274}
-  - component: {fileID: 1268386777490816620}
   m_Layer: 7
   m_Name: MoveCollider
   m_TagString: Untagged
@@ -1564,57 +1563,12 @@ Transform:
   m_GameObject: {fileID: 3489737933679946360}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.008726557, z: 0, w: 0.9999619}
-  m_LocalPosition: {x: -0.028898373, y: 0.33639526, z: -0.00034535897}
-  m_LocalScale: {x: 0.35103917, y: 0.60374147, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4567523505113594758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1268386777490816620
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3489737933679946360}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &3600276956066558321
 GameObject:
   m_ObjectHideFlags: 0
@@ -3574,8 +3528,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4567523505113594758}
   - component: {fileID: 2316249598498577356}
-  - component: {fileID: 8773017289042588756}
   - component: {fileID: 4310145898497758804}
+  - component: {fileID: 771513702890621781}
+  - component: {fileID: 1088143529908236701}
   m_Layer: 5
   m_Name: warrior
   m_TagString: Untagged
@@ -6607,7 +6562,48 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 4c70df3312bb83346a1bf065b30d3467, type: 2}
   - {fileID: 7400000, guid: 1ef525d53ae254f7d82ef364ced85490, type: 2}
   - {fileID: 7400000, guid: fabe4f140fdb9cb448bc941c7c93e8b6, type: 2}
---- !u!50 &8773017289042588756
+--- !u!114 &4310145898497758804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7398261402581939264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a099b1452181e19499b3dd2fa2f37d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _index: 0
+  _FightCollider: {fileID: 8156636859556878928}
+  _MoveCollider: {fileID: 0}
+  _SkillRoot: {fileID: 1295446180683119311}
+  _NavMeshAgent: {fileID: 0}
+  _AnimList: {fileID: 0}
+  _CharController: {fileID: 0}
+--- !u!195 &771513702890621781
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7398261402581939264}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.5
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!50 &1088143529908236701
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -6634,22 +6630,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4310145898497758804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7398261402581939264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a099b1452181e19499b3dd2fa2f37d37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _index: 1
-  _FightCollider: {fileID: 8156636859556878928}
-  _MoveCollider: {fileID: 1268386777490816620}
-  _SkillRoot: {fileID: 1295446180683119311}
 --- !u!1 &7426316698263142863
 GameObject:
   m_ObjectHideFlags: 0

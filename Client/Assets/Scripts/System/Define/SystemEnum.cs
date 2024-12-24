@@ -65,11 +65,11 @@ namespace Client
             MaxCount
         }
 
-        public enum eScenes
+        public enum eScene
         {
             Title,
             Loby,
-            Game,
+            GameScene,
 
             MaxCount
         }
@@ -120,6 +120,8 @@ namespace Client
         public enum eSkillType
         {
             None,
+            BasicAttack,
+            CharSkill,
             Dash,
             Parrying,
             Attack,
@@ -147,16 +149,6 @@ namespace Client
             ETC,
 
             MaxCount
-        }
-
-        public enum eScene
-        {
-            None,
-
-            GameScene,
-
-            MaxCount
-
         }
     }
 }

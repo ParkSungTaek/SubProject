@@ -60,14 +60,16 @@ namespace Client
                 InputManager.Instance.Init();
             }
         }
+
+        /// <summary>
+        /// TODO: 박성택 - 이게 여기있는게 맞나... 개별 Scene에 들어가야 할까....? 
+        /// </summary>
         public void InitAfterDataLoad()
         {
-            CharParameter Parameter = new CharParameter();
-            Parameter.CharIndex = 1;
-            GameManager.Instance.MyCharPlayer = (CharPlayer)CharManager.Instance.CharGenerate(Parameter);
+            GameManager.Instance.MyCharPlayer = (CharPlayer)CharManager.Instance.SelectedPlayableCharGenerate();
             if (GameManager.Instance.MyCharPlayer != null)
             {
-                Debug.Log("테스트 캐릭터 - 정상 로직으로 캐릭터 생성시 반드시 삭제바람");
+                Debug.Log("GameManager : 본인 캐릭터 생성 TODO: 로직 이전 필요");
 
             }
             else
