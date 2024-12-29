@@ -16,7 +16,6 @@ namespace Client
         public override void OnInitialize(TrackAsset aPent)
         {
             base.OnInitialize(aPent);
-            Debug.Log("HelloWorld!123123");
         }
     }
 }

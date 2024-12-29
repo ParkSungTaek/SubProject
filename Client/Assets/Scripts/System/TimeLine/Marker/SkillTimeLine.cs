@@ -18,8 +18,25 @@ namespace Client
 
         public void OnNotify(Playable origin, INotification notification, object context)
         {
-            SkillMarker Skill = notification as SkillMarker;
-            Debug.Log("HelloWorld!asdfasdfasdf");
+            SkillTimeLineMarker Skill = notification as SkillTimeLineMarker;
+            if (Skill == null)
+                return;
+
+            Skill.MarkerAction();
+
+
+            Debug.Log($"{notification.id}");
+            Debug.Log($"{origin}");
+
+            
+            if (context == null)
+            {
+                Debug.Log($"context null");
+            }
+            else
+            {
+                Debug.Log($"context : {context.ToString()}");
+            }
         }
     }
 

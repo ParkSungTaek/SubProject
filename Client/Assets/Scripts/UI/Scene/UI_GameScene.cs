@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections.Generic;
 using Client;
+using static Client.InputManager;
 
 namespace Client
 {
@@ -45,9 +46,13 @@ namespace Client
         #region Buttons
         void ButtonBind()
         {
-            //BindEvent(GetButton((int)Buttons.AttackBtn).gameObject, Btn_Attack);
+            BindEvent(GetButton((int)Buttons.AttackBtn).gameObject, Btn_Attack);
         }
-
+        private void Btn_Attack(PointerEventData data)
+        {
+            InputParameter parameter = new(); // TODO 마우스 키보드 등 정보
+            GameManager.Instance.MyCharPlayer.CharSKillInfo.PlaySkill(eInputSystem.Skill1, parameter);
+        }
 
         #endregion Buttons
 

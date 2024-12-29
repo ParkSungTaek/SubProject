@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 9209790588447859989}
   - component: {fileID: 6179548330062006882}
   - component: {fileID: 4483208257261854342}
-  - component: {fileID: -4419333843005544930}
   m_Layer: 0
   m_Name: ArcherChar
   m_TagString: Untagged
@@ -35,9 +34,9 @@ Transform:
   m_Children:
   - {fileID: 8696868400410504739}
   - {fileID: 4209486137436547214}
+  - {fileID: 3084569036871084804}
   - {fileID: 8036848009810390526}
   - {fileID: 7126155067378926520}
-  - {fileID: 3084569036871084804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &9209790588447859989
@@ -105,26 +104,9 @@ MonoBehaviour:
   _MoveCollider: {fileID: 0}
   _SkillRoot: {fileID: 1571913524965519912}
   _NavMeshAgent: {fileID: 9209790588447859989}
-  _AnimList: {fileID: -4419333843005544930}
   _CharController: {fileID: 6179548330062006882}
   _CharCamaraPos: {fileID: 8232087612875149604}
---- !u!114 &-4419333843005544930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1092405579576664056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21dd03ecda08464586353d97ddff9d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Idle: []
-  _Move: []
-  _Damage: []
-  _Death: []
-  _Other: []
+  _Animator: {fileID: 5918768519192656324}
 --- !u!1 &1571913524965519912
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8232087612875149604}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0.2588191, y: 4.5474735e-13, z: -1.7449575e-12, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 4, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -357,6 +339,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: akai_e_espiritu
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 8909beab11ec6004e82a024eedc86522, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 8909beab11ec6004e82a024eedc86522, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 8909beab11ec6004e82a024eedc86522, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3065ffa13c442124e9d16faa937c3973, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 8909beab11ec6004e82a024eedc86522, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -365,5 +359,10 @@ PrefabInstance:
 --- !u!4 &343289861660468158 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8909beab11ec6004e82a024eedc86522, type: 3}
+  m_PrefabInstance: {fileID: 236761352327038037}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5918768519192656324 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 8909beab11ec6004e82a024eedc86522, type: 3}
   m_PrefabInstance: {fileID: 236761352327038037}
   m_PrefabAsset: {fileID: 0}

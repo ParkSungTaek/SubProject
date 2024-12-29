@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -51,9 +52,9 @@ namespace Client
             //_charNowState.AnimPlay(playerState != _charNowState.NowPlayerState());
             if (parameter.isPlayAnim)
             {
-                if (_charBase.CharAnimInfo == null)
+                if (_charBase.CharAnim == null)
                     return;
-                Animator animator = _charBase.CharAnimInfo.Animator;
+                Animator animator = _charBase.CharAnim.Animator;
                 if (animator == null)
                     return;
 

@@ -10,13 +10,23 @@ using UnityEngine.AI;
 
 namespace Client
 {
-    public class CharAnim : MonoBehaviour
+    public class CharAnim 
     {
-        [SerializeField] protected AnimationClip[] _Idle;          // 네비 메쉬 에이전트
-        [SerializeField] protected AnimationClip[] _Move;          // 네비 메쉬 에이전트
-        [SerializeField] protected AnimationClip[] _Damage;          // 네비 메쉬 에이전트
-        [SerializeField] protected AnimationClip[] _Death;          // 네비 메쉬 에이전트
-        [SerializeField] protected AnimationClip[] _Other;          // 네비 메쉬 에이전트
+        protected Animator  _Animator;       // 애니메이터
 
-    }
+        public Animator Animator => _Animator;
+
+
+        /// <summary>
+        /// 초기화
+        /// </summary>
+        public void Initialized(Animator animator)
+        {
+            _Animator = animator;
+        }
+        public void PlayAnimation(PlayerState state)
+        {
+            _Animator.CrossFade($"{state}",1f,-1,0);
+        }
+    } 
 }

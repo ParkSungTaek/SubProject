@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using static Client.SystemEnum;
 
 namespace Client
 {

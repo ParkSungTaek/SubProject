@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static Client.InputManager;
 
 namespace Client
 {
@@ -9,11 +10,14 @@ namespace Client
     /// </summary>
     public class CharSKillInfo
     {
-        private Dictionary<long, SkillBase> _dicSkill = new Dictionary<long, SkillBase>(); // 스킬 리스트
+        //private Dictionary<long, SkillBase> _dicSkill = new Dictionary<long, SkillBase>(); // 스킬 리스트
+        private Dictionary<eInputSystem, SkillBase> _dicSkill = new Dictionary<eInputSystem, SkillBase>(); // 스킬 리스트
         private CharBase _charBase; // 스킬 시전자
         private Transform _SkillRoot; // 스킬 루트 
 
-        public Dictionary<long, SkillBase> DicSkill => _dicSkill; // 스킬 리스트
+        //public Dictionary<long, SkillBase> DicSkill => _dicSkill; // 스킬 리스트
+        public Dictionary<eInputSystem, SkillBase> DicSkill => _dicSkill; // 스킬 리스트
+
         public CharSKillInfo(CharBase charBase)
         {
             _charBase = charBase;
@@ -35,18 +39,13 @@ namespace Client
             _SkillRoot = skillRoot.transform;
 
             // 스킬 추가
-            foreach (var skillIndex in skillArray)
+            for (int i = 0; i < skillArray.Count; i++)
             {
-                AddSkill(skillIndex);
-                //var _skillData = SkillCreator.CreateSkill(skillIndex);
-                //if (_skillData)
-                //    continue;
-                //
-                //_dicSkill.Add(skillIndex, _skillData);
+                AddSkill(skillArray[i],i);
             }
         }
 
-        public void DeleteSkill(long skillIndex)
+        public void DeleteSkill(eInputSystem skillIndex)
         {
             if (_dicSkill == null)
                 return;
@@ -56,21 +55,33 @@ namespace Client
                 _dicSkill.Remove(skillIndex);
             }
         }
-        public void AddSkill(long skillIndex)
+        public void AddSkill(long skillIndex,int idx)
         {
             if (_dicSkill == null)
                 return;
 
-            if (!_dicSkill.ContainsKey(skillIndex))
+            if (!_dicSkill.ContainsKey((eInputSystem)(idx + 1)))
             {
                 SkillBase skillBase = SkillCreator.CreateSkill(skillIndex);
                 if (skillBase == null)
                     return;
 
                 skillBase.SetCharBase(_charBase);
-                _dicSkill.Add(skillIndex, skillBase);
+                //_dicSkill.Add(skillIndex, skillBase);
+                _dicSkill.Add((eInputSystem)(idx + 1), skillBase);
                 skillBase.transform.parent = _SkillRoot;
             }
         }
+        public void PlaySkill(eInputSystem skillIndex, InputParameter parameter)
+        {
+            if (_dicSkill == null)
+                return;
+
+            if (_dicSkill.ContainsKey(skillIndex))
+            {
+                _dicSkill[skillIndex].PlaySkill(parameter);
+            }
+        }
+
     }
 }

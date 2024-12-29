@@ -21,19 +21,17 @@ namespace Client
         [SerializeField] private   Collider     _MoveCollider;  // 이동 콜라이더
         [SerializeField] private   GameObject   _SkillRoot;     // 스킬 루트
         [SerializeField] protected NavMeshAgent _NavMeshAgent;  // 네비 메쉬 에이전트
-        [SerializeField] protected CharAnim     _AnimList;      // 캐릭터 애니메이션 리스트
         [SerializeField] protected CharacterController _CharController; // 캐릭터 애니메이션 리스트
         [SerializeField] protected GameObject _CharCamaraPos; // 캐릭터 애니메이션 리스트
+        [SerializeField] protected Animator _Animator;       // 애니메이터\
 
         private ExecutionInfo _executionInfo = null; // 기능 정보
         private CharFSMInfo   _charFSM;              // 캐릭터 현재 유한상태 머신
         private CharSKillInfo _charSKillInfo;        // 캐릭터 스킬
-        private CharAnimInfo  _charAnimInfo;         // 캐릭터 스킬
         private CharItemInfo  _charItemInfo;         // 캐릭터 보유/장비 아이템
-
-        private CharStat     _charStat = null;     // Stat 정보
-        private CharData     _charData = null;     // 캐릭터 데이터
-        //private SPUM_Prefabs _sPUM_Prefabs = null; // SPUM 프리팹
+        private CharStat     _charStat = null;       // Stat 정보
+        private CharData     _charData = null;       // 캐릭터 데이터
+        private CharAnim     _charAnim = null;       // 캐릭터 애니메이션 리스트
 
         private GameObject _LWeapon = null;       // 왼손 무기
         private GameObject _RWeapon = null;       // 오른손 무기
@@ -62,11 +60,12 @@ namespace Client
         public ExecutionInfo ExecutionInfo => _executionInfo;  // 기능 정보
         public CharFSMInfo CharFSM => _charFSM; // 캐릭터 현재 유한상태 머신
         public CharSKillInfo CharSKillInfo => _charSKillInfo; // 캐릭터 스킬
-        public CharAnimInfo CharAnimInfo => _charAnimInfo; // 캐릭터 스킬
         public Transform CharTransform => _CharTransform;
         private Transform CharUnitRoot => _CharUnitRoot; // 캐릭터 유닛 루트 트렌스폼
         public CharItemInfo CharItemInfo => _charItemInfo;
         public GameObject CharCamaraPos => _CharCamaraPos; // 카메라 위치
+        public CharAnim CharAnim => _charAnim; // 카메라 위치
+
         protected CharBase() { }
 
         private void Awake()
@@ -79,7 +78,7 @@ namespace Client
             _charFSM = new CharFSMInfo(this);
             _charData = DataManager.Instance.GetData<CharData>(_index);
             _NavMeshAgent = GetComponent<NavMeshAgent>();
-
+            _charAnim = new();
             if (_charData != null)
             {
                 CharStatData charStat = DataManager.Instance.GetData<CharStatData>(_charData.charStatId);
@@ -96,22 +95,14 @@ namespace Client
         }
         private void Start()
         {
-            //SPUM_Prefabs sPUM_Prefabs = Util.GetOrAddComponent<SPUM_Prefabs>(gameObject);
-            //if (sPUM_Prefabs != null)
-            //{
-            //    _sPUM_Prefabs = sPUM_Prefabs;
-            //}
-            //if (!_sPUM_Prefabs.allListsHaveItemsExist())
-            //{
-            //    _sPUM_Prefabs.PopulateAnimationLists();
-            //}
-            //_sPUM_Prefabs.OverrideControllerInit();
-            //foreach (PlayerState state in Enum.GetValues(typeof(PlayerState)))
-            //{
-            //    _indexPair[state] = 0;
-            //}
-            //// 애니메이션
-            //_charAnimInfo = new CharAnimInfo(_sPUM_Prefabs._anim);
+            if (_charAnim != null)
+            {
+                _charAnim.Initialized(_Animator);
+            }
+            foreach (PlayerState state in Enum.GetValues(typeof(PlayerState)))
+            {
+                _indexPair[state] = 0;
+            }
             CharInit();
         }
 
@@ -211,7 +202,7 @@ namespace Client
         }
         public void PlayStateAnimation(PlayerState state)
         {
-            //_sPUM_Prefabs.PlayAnimation(state, _indexPair[state]);
+            _charAnim.PlayAnimation(state);
         }
     }
 }

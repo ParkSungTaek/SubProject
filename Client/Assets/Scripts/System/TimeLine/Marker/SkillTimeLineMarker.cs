@@ -9,17 +9,25 @@ namespace Client
     /// <summary>
     /// 스킬 타임라인용 마커
     /// </summary>
-    public class SkillTimeLineMarker : Marker, INotificationReceiver
+    public class SkillTimeLineMarker : Marker, INotification
     {
-        public void OnNotify(Playable origin, INotification notification, object context)
+        public PropertyName id => new PropertyName("SkillTimeLineMarker");
+
+
+        public virtual void  MarkerAction()
         {
-            Debug.Log("HelloWorld!");
+
+        }
+
+        public virtual void SkillInitialize()
+        {
+
         }
 
         public override void OnInitialize(TrackAsset aPent)
         {
             base.OnInitialize(aPent);
-            Debug.Log("HelloWorld!123123");
+            SkillInitialize();
         }
     }
     

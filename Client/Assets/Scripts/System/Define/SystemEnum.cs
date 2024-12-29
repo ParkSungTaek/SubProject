@@ -150,5 +150,29 @@ namespace Client
 
             MaxCount
         }
+
+
+        public enum PlayerAnim
+        {
+            idle,
+            move,
+            attack,
+            damaged,
+            debuff,
+            death,
+
+            MaxCount
+        }
+
+        public enum PlayerState
+        {
+            IDLE,
+            MOVE,
+            ATTACK,
+            DAMAGED,
+            DEBUFF,
+            DEATH,
+            OTHER,
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Client
 
             var playableBehaviour = new AnimationPlayableBehaviour();
 
-            playableBehaviour.animator = charBase.CharAnimInfo.Animator;
+            playableBehaviour.animator = charBase.CharAnim.Animator;
             playableBehaviour.animationClip = animationClip;
             var scriptPlayable = ScriptPlayable<AnimationPlayableBehaviour>.Create(graph, playableBehaviour);
 
