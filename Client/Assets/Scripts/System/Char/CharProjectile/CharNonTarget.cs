@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,10 +10,10 @@ namespace Client
         private Vector3 Target;         // 목표 지점
 
         [SerializeField]
-        private float FixedMaxHeight;   // 최고점 높이
-        
+        private float heightGap;        // 최고점의 상대적 높이
+
+        private float FixedMaxHeight;   // 최고점의 절대적 높이       
         private float elaspedTime = 0f; // 경과 시간
-        private float estimatedTime;    // 예상 도달 시간
 
         private float InitialSpeed;     // 초기 속력
         private Vector3 directionXZ;    // 수평 성분
@@ -20,27 +21,23 @@ namespace Client
         private float cosAngle;
         private float sinAngle;
 
+        private Coroutine moveCoroutine;
+
         protected override void CharInit()
         {
             base.CharInit();
+            
             GetSpeedAndAngle();
-        }
-       
-        private void FixedUpdate()
-        {
-            if (elaspedTime > estimatedTime)
-                return;
-            transform.position = CalculatePosition(Origin, Target);            
+            moveCoroutine = StartCoroutine(UpdatePosition(Origin, Target));
         }
 
         /// <summary>
-        /// 입력값(투사체 최대 높이, 중력, 타겟 위치)을 통한 궤도의 
+        /// 입력값(투사체 최대 높이, 중력, 타겟 위치)을 통한 궤도 산출
         /// </summary>
         private void GetSpeedAndAngle()
         {
-            // 타겟의 높이 조건 검사
-            if (Target.y >= FixedMaxHeight)
-                FixedMaxHeight = Target.y + 1f;
+            // 투사체당 최고점의 높이 조절
+            FixedMaxHeight = Origin.y + heightGap;
 
             // xz평면 요소와 y축 요소 구함
             Vector3 horizontalVec = new Vector3(Target.x - Origin.x, 0, Target.z - Origin.z);
@@ -63,14 +60,30 @@ namespace Client
             InitialSpeed = Mathf.Sqrt(2f * gravity * FixedMaxHeight) / sinAngle;
         }
 
-        private Vector3 CalculatePosition(Vector3 Origin, Vector3 Target)
-        {            
-            float nowXZ = InitialSpeed * cosAngle * elaspedTime;
-            float nowY = InitialSpeed * sinAngle * elaspedTime - 0.5f * gravity * elaspedTime * elaspedTime;
-            
-            Vector3 updatedPosition = nowXZ * directionXZ + nowY * Vector3.up;
-            elaspedTime += Time.fixedDeltaTime;
-            return updatedPosition;
+        private IEnumerator UpdatePosition(Vector3 Origin, Vector3 Target)
+        {
+            float dist = Vector3.Distance(transform.position, Target);          
+            while (dist >= 0.5f)
+            {
+                Debug.Log(dist);
+                float nowXZ = InitialSpeed * cosAngle * elaspedTime;
+                float nowY = InitialSpeed * sinAngle * elaspedTime - 0.5f * gravity * elaspedTime * elaspedTime;
+                Vector3 updatedPosition = nowXZ * directionXZ + nowY * Vector3.up;
+                transform.position = updatedPosition;
+                dist = Vector3.Distance(transform.position, Target);
+                elaspedTime += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            Debug.Log($"Arrived position : {transform.position}");
+            Destroy( gameObject );
+        }
+
+        private void OnDestroy()
+        {
+            Debug.Log("정상적으로 도달하여 투사체가 사라집니다. ExecutionBase 필요");
+            if (moveCoroutine != null)
+                StopCoroutine(moveCoroutine);
         }
     }
 }

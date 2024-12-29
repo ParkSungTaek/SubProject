@@ -13,8 +13,8 @@ namespace Client
         protected override SystemEnum.eCharType CharType => SystemEnum.eCharType.Projectal;
         protected override void CharInit()
         {
-            base.CharInit();
-            CharManager.Instance.SetChar<CharProjectal>(this);
+            //base.CharInit();
+            //CharManager.Instance.SetChar<CharProjectal>(this);
 
             Origin = transform.position;
         }
